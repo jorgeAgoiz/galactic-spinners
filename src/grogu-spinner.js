@@ -18,6 +18,15 @@ export class GroguSpinner extends HTMLElement {
             align-items: center;
         }
 
+        .full-page {
+          position:fixed;
+          left:0;
+          top:0;
+          right:0;
+          bottom:0;
+          background-color: yellow;
+        }
+
         svg {
             width: ${this.size}px;
             height: ${this.size}px;
@@ -63,13 +72,19 @@ export class GroguSpinner extends HTMLElement {
     this.speed = this.getAttribute("speed") ?? "1.8";
     this.color = this.getAttribute("color") ?? "black";
     this.scale = this.getAttribute("scale") ?? "1";
+    this.fullpage = this.getAttribute("fullpage");
+
+    if (this.fullpage) {
+      /* document.querySelector("div.container").classList.add("full-page"); */
+    }
+
     this.render();
   }
 
   render() {
     this.shadowRoot.innerHTML = `
             <style>${this.getStyles()}</style>
-            <div>
+            <div class="container">
               ${groguIcon}
             </div>
         `;
