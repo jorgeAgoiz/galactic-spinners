@@ -1,9 +1,13 @@
+import { groguIcon } from "./assets/grogu-icon";
+
+/**
+ * Grogu Spinner Web Component
+ * @class GroguSpinner
+ */
 export class GroguSpinner extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this.color;
-    this.scale;
   }
 
   getStyles() {
@@ -14,12 +18,13 @@ export class GroguSpinner extends HTMLElement {
             align-items: center;
         }
 
-        img {
+        svg {
             width: ${this.size}px;
             height: ${this.size}px;
             background-color: transparent;
             -webkit-animation: spin ${this.speed}s infinite linear;
             animation: spin ${this.speed}s infinite linear;
+            fill: ${this.color};
         }
 
         @-webkit-keyframes spin {
@@ -29,7 +34,7 @@ export class GroguSpinner extends HTMLElement {
               }
               50% {
                 -webkit-transform: rotate(180deg) scale(1.3);
-                transform: rotate(180deg) Scale(1.3);
+                transform: rotate(180deg) Scale(${this.scale});
               }
               100% {
                 -webkit-transform: rotate(360deg) Scale(1);
@@ -43,7 +48,7 @@ export class GroguSpinner extends HTMLElement {
             }
             50% {
               -webkit-transform: rotate(180deg) scale(1.3);
-              transform: rotate(180deg) Scale(1.3);
+              transform: rotate(180deg) Scale(${this.scale});
             }
             100% {
               -webkit-transform: rotate(360deg) Scale(1);
@@ -56,6 +61,8 @@ export class GroguSpinner extends HTMLElement {
   connectedCallback() {
     this.size = this.getAttribute("size") ?? "128";
     this.speed = this.getAttribute("speed") ?? "1.8";
+    this.color = this.getAttribute("color") ?? "black";
+    this.scale = this.getAttribute("scale") ?? "1";
     this.render();
   }
 
@@ -63,23 +70,10 @@ export class GroguSpinner extends HTMLElement {
     this.shadowRoot.innerHTML = `
             <style>${this.getStyles()}</style>
             <div>
-                <img 
-                    alt="Grogu Image" 
-                    src="./src/assets/grogu-lib-icon.svg"
-                />
+              ${groguIcon}
             </div>
         `;
   }
 }
 
 customElements.define("grogu-spinner", GroguSpinner);
-
-/**
- * @todo
- * - Create Spinner animation
- * - Create Scale animation
- * - Add color props
- * - Add size props
- * - Add velocity props
- * - Add scale props
- */
