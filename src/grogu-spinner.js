@@ -2,6 +2,8 @@ export class GroguSpinner extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.color;
+    this.scale;
   }
 
   getStyles() {
@@ -13,11 +15,11 @@ export class GroguSpinner extends HTMLElement {
         }
 
         img {
-            width: 100px;
-            height: 100px;
+            width: ${this.size}px;
+            height: ${this.size}px;
             background-color: transparent;
-            -webkit-animation: spin 1.5s infinite linear;
-            animation: spin 1.5s infinite linear;
+            -webkit-animation: spin ${this.speed}s infinite linear;
+            animation: spin ${this.speed}s infinite linear;
         }
 
         @-webkit-keyframes spin {
@@ -52,6 +54,8 @@ export class GroguSpinner extends HTMLElement {
   }
 
   connectedCallback() {
+    this.size = this.getAttribute("size") ?? "128";
+    this.speed = this.getAttribute("speed") ?? "1.8";
     this.render();
   }
 
