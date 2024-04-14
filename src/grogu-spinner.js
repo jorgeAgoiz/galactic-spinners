@@ -1,7 +1,22 @@
 import { groguIcon } from "./assets/grogu-icon";
 
+/** @type {string} Default spinner´s size */
+const DEFAULT_SIZE = "128";
+
+/** @type {string} Default spinner speed */
+const DEFAULT_SPEED = "1.8";
+
+/** @type {string} Default spinner color */
+const DEFAULT_COLOR = "black";
+
+/** @type {string} Default background color to full page variant */
+const DEFAULT_BG_COLOR = "white";
+
+/** @type {string} Default spinner scale */
+const DEFAULT_SCALE = "1";
+
 /**
- * Grogu Spinner Web Component
+ * Grogu Spinner Native Web Component
  * @class GroguSpinner
  */
 export class GroguSpinner extends HTMLElement {
@@ -24,7 +39,7 @@ export class GroguSpinner extends HTMLElement {
           top:0;
           right:0;
           bottom:0;
-          background-color: yellow;
+          background-color: ${this.bgColor};
         }
 
         svg {
@@ -68,17 +83,22 @@ export class GroguSpinner extends HTMLElement {
   }
 
   connectedCallback() {
-    this.size = this.getAttribute("size") ?? "128";
-    this.speed = this.getAttribute("speed") ?? "1.8";
-    this.color = this.getAttribute("color") ?? "black";
-    this.scale = this.getAttribute("scale") ?? "1";
-    this.fullpage = this.getAttribute("fullpage");
-
-    if (this.fullpage) {
-      /* document.querySelector("div.container").classList.add("full-page"); */
-    }
+    this.size = this.getAttribute("size") ?? DEFAULT_SIZE;
+    this.speed = this.getAttribute("speed") ?? DEFAULT_SPEED;
+    this.color = this.getAttribute("color") ?? DEFAULT_COLOR;
+    this.scale = this.getAttribute("scale") ?? DEFAULT_SCALE;
+    this.bgColor = this.getAttribute("bg-color") ?? DEFAULT_BG_COLOR;
+    this.fullpage = this.hasAttribute("fullpage");
 
     this.render();
+
+    if (this.fullpage) {
+      this.shadowRoot.querySelector(".container").classList.add("full-page");
+    }
+  }
+
+  attributeChangedCallback() {
+    console.log(this.getAttributeNames());
   }
 
   render() {
