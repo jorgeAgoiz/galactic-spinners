@@ -18,11 +18,31 @@ const DEFAULT_SCALE = "1";
 /**
  * Grogu Spinner Native Web Component
  * @class GroguSpinner
+ *
+ * @attributes size, speed, color, scale, bg-color
  */
 export class GroguSpinner extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+
+    /** @property {string} [size="128"] size Size of spinner on pixels */
+    this.size;
+
+    /** @property {string} [speed="1.8"] Speed of spinner in seconds */
+    this.speed;
+
+    /** @property {string} [color="black"] Color of spinner in any valid format */
+    this.color;
+
+    /** @property {string} [scale="1"] Scale of spinner */
+    this.scale;
+
+    /** @property {string} [bg-color="white"] Background color of full page variant */
+    this.bgColor;
+
+    /** @property {boolean} [fullpage="false"] Full page variant */
+    this.fullpage;
   }
 
   getStyles() {
@@ -95,10 +115,6 @@ export class GroguSpinner extends HTMLElement {
     if (this.fullpage) {
       this.shadowRoot.querySelector(".container").classList.add("full-page");
     }
-  }
-
-  attributeChangedCallback() {
-    console.log(this.getAttributeNames());
   }
 
   render() {
